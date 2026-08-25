@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Login — Department Satisfaction Matrix</title>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  body{margin:0;background:#F3F2ED;font-family:'IBM Plex Sans',sans-serif;color:#17170F;display:flex;min-height:100vh;align-items:center;justify-content:center;}
+  .box{background:#fff;border:1.5px solid #17170F;padding:40px 32px;max-width:380px;text-align:center;}
+  h1{font-family:'Archivo Black',sans-serif;font-size:20px;margin:0 0 10px;}
+  p{color:#5B5A50;font-size:13.5px;line-height:1.6;margin-bottom:24px;}
+  #gsiButton{display:flex;justify-content:center;}
+  #status{margin-top:16px;font-size:12.5px;color:#5B5A50;}
+</style>
+</head>
+<body>
+<div class="box">
+  <h1>Department Satisfaction Matrix</h1>
+  <p>PT Cahaya Berlian Lestari<br>Login dengan akun Google yang terdaftar sebagai kabag.</p>
+  <div id="gsiButton"></div>
+  <div id="status"></div>
+</div>
+
+<script>
+// ============================================================
+// GANTI DUA NILAI DI BAWAH INI:
+// ============================================================
+var CLIENT_ID = "GANTI_DENGAN_CLIENT_ID_ANDA.apps.googleusercontent.com";
+var EXEC_URL = "https://script.google.com/macros/s/GANTI_DENGAN_DEPLOYMENT_ID_ANDA/exec";
+// ============================================================
+
+function handleCredentialResponse(response) {
+  document.getElementById("status").textContent = "Berhasil login, mengarahkan ke form...";
+  var idToken = response.credential;
+  window.location.href = EXEC_URL + "?token=" + encodeURIComponent(idToken);
+}
+
+window.onload = function () {
+  google.accounts.id.initialize({
+    client_id: CLIENT_ID,
+    callback: handleCredentialResponse
+  });
+  google.accounts.id.renderButton(
+    document.getElementById("gsiButton"),
+    { theme: "outline", size: "large", text: "signin_with" }
+  );
+};
+</script>
+</body>
+</html>
